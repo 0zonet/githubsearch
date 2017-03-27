@@ -1,87 +1,72 @@
-<div class="row">
-  <div class="col-md-12">
-
-      <form>
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Github Username" name="username" [(ngModel)]="username" [formControl]="searchControl">
-          </div>
-      </form>
-
-  </div>
-
-  <div class="col-md-12" *ngIf="!username">
-    <div class="alert alert-info" role="alert">Search somebody...</div>
-  </div>
-</div>
+<h4 class="ui horizontal divider header">
+  <i class="github icon"></i>
+    Busca usuarios de Github
+</h4>
 
 
-
-
-
-<div *ngIf="user && username">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-         <h3 class="panel-title">{{user.login}}</h3>
-      </div>
-
-      <div class="panel-body">
-
-        <div class="row">
-           <div class="col-md-4">
-             <img class="img-thumbnail github-avatar" src="{{user.avatar_url}}" alt="">
-           </div>
-           <div class="col-md-8">
-              <div class="stats">
-                <span class="label label-default">{{user.public_repos}} Public Repos</span>
-                <span class="label label-primary">{{user.public_gists}} Public Gists</span>
-                <span class="label label-success">{{user.followers}} Followers</span>
-                <span class="label label-info">{{user.following}} Following</span>
-              </div>
-              <br/>
-              <ul class="list-group">
-                  <li class="list-group-item"><strong>Username: </strong>{{user.login}}</li>
-                  <li class="list-group-item"><strong>Location: </strong>{{user.location}}</li>
-                  <li class="list-group-item"><strong>Email: </strong>{{user.email}}</li>
-                  <li class="list-group-item"><strong>Blog: </strong><a href="{{user.blog}}" target="_blank">{{user.blog}}</a></li>
-                  <li class="list-group-item"><strong>Member Since: </strong>{{user.created_at}}</li>
-              </ul>
-           </div>
-        </div>
-
-      </div>
-
+<div>
+    <div class="ui fluid left icon action input" [ngClass]="{'loading':status}">              
+        <input type="text"  placeholder="Github Username" name="username" [(ngModel)]="username" [formControl]="searchControl">
+        <i class="search icon"></i>
+        <a class="ui button blue">Buscar</a>
     </div>
 </div>
 
-<div *ngIf="repos && username">
 
-  <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Repos</h3>
-      </div>
-      <div class="panel-body">
-          <div class="row">
-              <div class="col-md-12">
-                <div *ngFor="let repo of repos">
-                    <div class="row">
-
-                        <div class="col-md-9">
-                          <h4><a href="{{repo.html_url}}" target="_blank">{{repo.name}}</a></h4>
-                          <p>
-                            {{repo.description}}
-                          </p>
-                        </div>
-                        <div class="col-md-3">
-                          <span class="label label-default">{{repo.watchers}} Watchers</span>
-                          <span class="label label-primary">{{repo.forks}} Forks</span>
-                        </div>
-
-                    </div>
-                    <hr/>
-                </div>
-              </div>
-          </div>
-      </div>
+<div class="ui info message">
+  <div class="header">
+    Info
   </div>
+  <p>Ingresa el nombre de usuario para buscar...</p>
+</div>
+
+
+
+
+<div *ngIf="user && username" class="top-space">
+    <section class="ui items animated fadeInUp">
+            <div class="item">
+                <article class="image">
+                        <img src="{{user.avatar_url}}" alt="">
+                </article>
+                <article class="content">
+                     <a href="#" class="header">{{user.login}}</a>
+                     <div class="meta">
+                         <div class="ui label teal">Public Repos<div class="detail">{{user.public_repos}}</div></div>
+                         <div class="ui label blue">Public Gists<div class="detail">{{user.public_gists}}</div></div>
+                         <div class="ui label grey">Followers<div class="detail">{{user.followers}}</div></div>
+                         <div class="ui label violet">Following<div class="detail">{{user.following}}</div></div>
+                     </div>
+
+                    <div class="description">
+                        <div class="ui list">
+                            <div class="item"><strong>Location: </strong>{{user.location}}</div>
+                            <div class="item"><strong>Email: </strong>{{user.email}}</div>
+                            <div class="item"><strong>Blog: </strong><a href="{{user.blog}}" target="_blank">{{user.blog}}</a></div>
+                            <div class="item"><strong>Member Since: </strong>{{user.created_at}}</div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+    </section>
+</div>
+
+<div *ngIf="repos && username" class="top-space bottom-space">
+
+    <section class="ui middle aligned divided list animated fadeInUp">
+        <article class="item" *ngFor="let repo of repos">
+                    <div class="right floated content">
+                        <div class="ui label blue">Watchers <div class="detail">{{repo.watchers}}</div></div>
+                        <div class="ui label gray">Forks <div class="detail">{{repo.forks}}</div></div>
+                    </div>
+                <i class="large github middle aligned icon"></i>
+                <div class="content">
+                    <a class="header" href="{{repo.html_url}}" target="_blank">{{repo.name}}</a>
+                    <div class="description"></div>
+                </div>
+        </article>
+    </section>
+
+
 
 </div>

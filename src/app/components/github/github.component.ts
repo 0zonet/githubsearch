@@ -18,12 +18,14 @@ export class GithubComponent implements OnInit {
   user: any;
   repos: any;
   username: string;
+  status: boolean;
   searchControl = new FormControl();
 
   constructor(private githubService: GithubService) { 
   }
 
   ngOnInit() {
+      this.status = false;
       this.searchControl
           .valueChanges
           .debounceTime(700)
@@ -34,19 +36,21 @@ export class GithubComponent implements OnInit {
 
   search(){
     if(this.username){
-    
+          this.status = true;
           this.githubService.updateUsername(this.username);
     
           this.githubService.getUser().subscribe(user =>{
-              console.log(user);
+              //Guardar usuario en este componente
               this.user = user;
+              //Get repos
+              this.githubService.getRepos().subscribe(repos => {
+                //Guardar repos en este componente
+                this.repos = repos;
+                this.status = false;
+              });
           });
     
-          //Get repos
-          this.githubService.getRepos().subscribe(repos => {
-            this.repos = repos;
-          });
-          }
+      }
   }
 
 }
